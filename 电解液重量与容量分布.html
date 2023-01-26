@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset="utf-8" />
+    <title>ECharts</title>
+    <!-- 引入刚刚下载的 ECharts 文件 -->
+    <script src='js/echarts.min.js'></script>
+    <script src='js/jquery-3.6.3.min.js'></script>
+</head>
+<body>
+<!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+<div id="main" style="width: 600px;height:400px;"></div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var chartDom = document.getElementById('main');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    option = {
+        dataZoom:[         //坐标轴缩放
+            {
+                type:"slider", //'insight'
+                xAxisIndex:0  //对X轴缩放
+            },
+            {
+                type:"slider", //'insight'
+                yAxisIndex:0,
+                start:0,    //缩放筛选
+                end:100
+            }
+        ],
+        grid:{           //网格
+            show:'true'
+        },
+        title:{
+            text:"电解液重量与容量分布",
+            top:"5"
+        },
+        toolbox:{
+            feature:{
+                dataZoom:{}  //缩小
+            }
+        },
+        tooltip:{
+            trigger:'item',
+            formatter:function (arg){
+                console.log(arg)          //是为了在网页上检查代码
+                return '电解液:'+arg.data[0]+"g;"+"容量:"+arg.data[1]+'mAh'
+
+            }
+        },
+        legend:{
+            data:["18g电解液","18.5g电解液","19g电解液-base","19.5g电解液","20g电解液"],
+            bottom:"100"
+        },
+        xAxis: {
+            scale:"true"
+        },
+        yAxis: {
+            scale:'true',
+            splitNumber:4,
+            min:10500,
+            max:10900
+        },
+        series: [
+            {
+                name:"18g电解液",
+                symbolSize:8,
+                data: [
+                    [18.08,10661.7816],
+                    [18.07,10703.792],
+                    [18.11,10675.2276],
+                    [18.13,10691.5289],
+                    [18.09,10752.5172],
+                    [18.1,10767.3009]
+                ],
+                type: 'effectScatter',//涟漪动画
+                showEffectOn:'emphasis',//render emphasis
+                rippleEffect:{
+                    scale:4
+                }
+            },
+            {name:"18.5g电解液",
+                symbolSize: 8,
+                data:[
+                    [18.42,10717.75],
+                    [18.54,10659.7246],
+                    [18.54,10795.1172],
+                    [18.61,10730.0076],
+                    [18.48,10755.8354],
+                    [18.56,10772.3856]
+                ],
+                type:'scatter'
+            },
+            {name:"19g电解液-base",
+                symbolSize: 8,
+                data:[
+                    [19.1,10702.8947],
+                    [19.07,10785.8451],
+                    [19.08,10675.1781],
+                    [19.08,10689.1361],
+                    [19.06,10697.538],
+                    [19.04,10777.9688]
+                ],
+                type:'scatter'
+            },
+            {name:"19.5g电解液",
+                symbolSize: 8,
+                data:[
+                    [19.45,10699.032],
+                    [19.54,10642.6759],
+                    [19.4,10775.8751],
+                    [19.56,10658.694],
+                    [19.56,10777.7694],
+                    [19.59,10693.3235]
+                ],
+                type:'scatter'
+            },
+            {name:"20g电解液",
+                symbolSize: 8,
+                data:[
+                    [20.07,10659.7896],
+                    [20.05,10675.2778],
+                    [19.97,10660.8213],
+                    [20.04,10693.822],
+                    [20.01,10696.0154],
+                    [20.1,10683.4532]
+                ],
+                type:'scatter'
+            }
+        ]
+    };
+
+    option && myChart.setOption(option);
+
+
+    option && myChart.setOption(option);
+</script>
+</body>
+</html>
